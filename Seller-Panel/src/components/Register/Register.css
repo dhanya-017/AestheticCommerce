@@ -1,0 +1,82 @@
+.registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f4f7fb, #eaf4ff); /* soft gradient */
+}
+
+.form-card {
+  background: white;
+  padding: 25px;
+  width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border: 1px solid rgba(32, 191, 165, 0.3); /* subtle teal border */
+}
+
+.form-card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #20BFA5;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus {
+  border-color: #20BFA5;
+  outline: none;
+  box-shadow: 0 0 4px rgba(32, 191, 165, 0.3); /* soft glow */
+}
+
+.form-navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.form-navigation button {
+  padding: 8px 16px;
+  border: none;
+  background: #20BFA5;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.form-navigation button:hover {
+  background: #1aa18b; /* slightly darker teal */
+}
+
+.step-indicator {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: gray;
+}
+
+.review-text {
+  font-size: 14px;
+  color: #444;
+  margin-top: 10px;
+}
+
+.logo-container {
+  text-align: center; /* centers the logo in the form card */
+  margin-bottom: 15px; /* spacing below the logo */
+}
+
+.logo {
+  height: 130px;   /* adjust as needed */
+  width: auto;
+}

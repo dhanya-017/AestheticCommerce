@@ -1,0 +1,335 @@
+/* ==================== MAIN CONTAINER ==================== */
+.filter-drawer-content {
+  margin-top: 63px;
+  padding: 0;
+  transition: transform 0.3s ease-out;
+}
+
+.filter-drawer-container {
+  display: flex;
+  flex-direction: column;
+  height: 720px;
+  width: 350px;
+  background-color: #fff;
+  margin-top: -1.1rem;
+  margin-left: 0;
+  margin-right: 0;
+
+}
+
+/* ==================== HEADER ==================== */
+.filter-drawer-header {
+  width: 86%;
+  margin-left: -1rem;
+  padding: 1rem 2rem;
+  border-bottom: 1px solid #e5e7eb;
+  /* background: #fff; */
+}
+
+.filter-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: -1.7rem;
+}
+
+.filter-header-content .close-button {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.close-button {
+  display: flex;
+  margin-right: -2rem;
+  cursor: pointer;
+}
+
+.filter-drawer-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin: 0;
+}
+
+/* ==================== SCROLLABLE CONTENT ==================== */
+.filter-drawer-scrollable-content {
+  overflow-y: auto;
+  flex-grow: 1;
+  padding-left: 1rem;
+  max-height: calc(100% - 80px); /* Subtract header height */
+  /* height: 100%; */
+}
+
+/* ==================== FILTER SECTIONS ==================== */
+.filter-section {
+  margin-bottom: 2.5rem;
+}
+
+.filter-section-title {
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: #374151;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.25rem;
+}
+
+.filter-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-option-label {
+  font-size: 0.875rem;
+}
+
+/* ==================== BUTTONS & INPUTS ==================== */
+.show-more-btn {
+  font-size: 0.875rem;
+  color: #0d9488;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.price-radio-group {
+  margin-bottom: 0.75rem;
+}
+
+.custom-location-input,
+.price-input,
+.deliver-to-select {
+  border: 1px solid #d1d5db;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  width: 100%;
+  font-size: 0.875rem;
+}
+
+.price-range-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.price-range-separator {
+  font-size: 0.875rem;
+}
+
+/* ==================== FOOTER (DESKTOP & MOBILE) ==================== */
+.filter-drawer-footer.mobile {
+  position: fixed !important;
+  left: 0 !important;
+  right: auto !important;
+  bottom: 56px !important;
+  background: #fff;
+  border-top: 1px solid #e5e7eb;
+  padding: 12px 16px !important;
+  z-index: 9999 !important;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.08);
+  margin: 0 !important;
+  width: 350px !important;
+  display: none;
+}
+
+.filter-action-buttons {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.filter-action-buttons .reset-btn,
+.filter-action-buttons .apply-btn {
+  flex: 1;
+  padding: 12px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.filter-action-buttons .reset-btn {
+  background: #fff;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+
+.filter-action-buttons .reset-btn:hover {
+  background: #20bfa5;
+  color: white;
+  border-color: #20bfa5;
+}
+
+.filter-action-buttons .apply-btn {
+  background-color: #20bfa5;
+  color: #fff;
+  border: none;
+}
+
+.filter-action-buttons .apply-btn:hover {
+  background-color: #1a9f8c;
+}
+
+/* ==================== ANIMATIONS ==================== */
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes overlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+[data-state="open"] > .filter-drawer-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Remove default close button from SheetContent */
+[data-radix-sheet-content] > button[aria-label="Close"] {
+  display: none !important;
+}
+
+/* ==================== DESKTOP (601px and above) ==================== */
+@media (min-width: 601px) {
+  .filter-drawer-footer.mobile {
+    display: block !important;
+    /* display: none; */
+    position: fixed !important;
+    bottom: 0 !important;
+    width: 318px !important;
+    left: 0 !important;
+    padding: 16px !important;
+  }
+  
+  .filter-drawer-scrollable-content {
+    /* padding-bottom: px !important; */
+    margin-bottom: 3.4rem;
+  }
+
+}
+
+/* ==================== MOBILE (600px and below) - UNIFIED ==================== */
+@media (max-width: 600px) {
+  /* Content adjustments */
+  .filter-drawer-content {
+    width: 100%;
+    margin: 0;
+    margin-top: 2.3rem;
+  }
+  
+  .filter-drawer-container {
+    width: 83%;
+    height: 100%;
+    gap: 0;
+    /* margin-top: -3.2rem; */
+    /* margin-left: -1.6rem; */
+  }
+  .filter-header-content{
+    /* margin-top: 2.5rem; */
+    background-color: #fff;
+    padding: 0.7rem;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
+  }
+  .filter-drawer-header {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    display: flex;
+    margin-left: 0;
+    padding-left: 0.7rem;
+    justify-content: space-between;
+    background-color: #fff;
+  }
+  .close-button{
+    margin-right: -1.5rem;
+  }
+  
+  .filter-drawer-scrollable-content {
+    padding-left: 1.4rem;
+    padding-bottom: 140px !important; /* Consistent space for footer + nav */
+    margin-bottom: 0 !important;
+    margin-top: -1rem;
+  }
+  
+  /* Footer - FIXED POSITIONING */
+  .filter-drawer-footer.mobile {
+    display: block !important;
+    width: 100vw !important;
+    bottom: 56px !important; /* Always 56px from bottom on mobile */
+    left: 0 !important;
+    padding: 12px 16px !important; /* Consistent padding */
+  }
+  
+  .filter-action-buttons {
+    width: 90%;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  .filter-action-buttons .reset-btn,
+  .filter-action-buttons .apply-btn {
+    padding: 12px 16px;
+  }
+}
+
+/* ==================== SMALL MOBILE (480px and below) ==================== */
+@media (max-width: 480px) {
+  .filter-drawer-container {
+    width: 85%;
+  }
+  
+  /* Footer stays consistent - NO CHANGES */
+  .filter-drawer-footer.mobile {
+    bottom: 56px !important;
+    padding: 12px 16px !important;
+  }
+}
+
+/* ==================== EXTRA SMALL MOBILE (400px and below) ==================== */
+@media (max-width: 400px) {
+  .filter-drawer-header {
+    width: 90%;
+  }
+  
+  .filter-drawer-container {
+    width: 88%;
+  }
+  
+  /* Footer stays consistent - NO CHANGES */
+  .filter-drawer-footer.mobile {
+    bottom: 56px !important;
+    padding: 12px 16px !important;
+  }
+}

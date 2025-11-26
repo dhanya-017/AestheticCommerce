@@ -1,0 +1,89 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .login-background {
+    background-image: url("https://images.unsplash.com/photo-1581985377113-230c76371627?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .login-container {
+    background: linear-gradient(180deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    width: 320px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    color: white;
+  }
+  
+  .login-container h2 {
+    margin-bottom: 20px;
+  }
+  
+  .login-container label {
+    display: block;
+    text-align: left;
+    margin: 10px 0 5px;
+  }
+  
+  .login-container input[type="email"],
+  .login-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 1px solid white;
+    background: transparent;
+    color: white;
+    margin-bottom: 10px;
+  }
+  
+  .login-container input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+  
+  .login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85em;
+    margin: 15px 0;
+  }
+  
+  .login-options input {
+    margin-right: 5px;
+  }
+  
+  .login-options a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .login-container button {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #333;
+    margin-top: 10px;
+  }
+  
+  .login-container p {
+    margin-top: 20px;
+    font-size: 0.9em;
+  }
+  
+  .login-container a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+  }
