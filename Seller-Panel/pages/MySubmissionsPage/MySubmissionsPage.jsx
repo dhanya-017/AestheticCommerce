@@ -96,9 +96,22 @@ const MySubmissionsPage = () => {
                     </TableCell>
                     <TableCell>{request.subject}</TableCell>
                     <TableCell>{getStatusChip(request.status)}</TableCell>
-                    <TableCell>{request.response}</TableCell>
+                    <TableCell>
+                      {request.response ? (
+                        <Box>
+                          <Typography variant="body2" sx={{ mb: 1 }}>
+                            {request.response.length > 50 
+                              ? `${request.response.substring(0, 50)}...` 
+                              : request.response
+                            }
+                          </Typography>
+                        </Box>
+                      ) : (
+                        <Typography variant="body2" color="text.secondary">No response yet</Typography>
+                      )}
+                    </TableCell>
                     <TableCell align="right">
-                      <IconButton onClick={() => handleOpen(request.message)} aria-label="view message">
+                      <IconButton onClick={() => handleOpen(request)} aria-label="view message">
                         <Visibility />
                       </IconButton>
                       <IconButton onClick={() => handleDelete(request._id)} aria-label="delete">
@@ -112,12 +125,36 @@ const MySubmissionsPage = () => {
           </TableContainer>
         </Paper>
         {selectedMessage && (
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Your Message</DialogTitle>
+          <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth>
+            <DialogTitle>Contact Message Details</DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                {selectedMessage}
-              </DialogContentText>
+              <Box sx={{ mb: 2 }}>
+                <Typography variant="subtitle2" color="text.secondary">Subject:</Typography>
+                <Typography variant="body1" sx={{ mb: 2 }}>{selectedMessage.subject}</Typography>
+                
+                <Typography variant="subtitle2" color="text.secondary">Your Message:</Typography>
+                <Paper variant="outlined" sx={{ p: 2, mb: 2, backgroundColor: 'grey.50' }}>
+                  <Typography variant="body2">{selectedMessage.message}</Typography>
+                </Paper>
+                
+                <Typography variant="subtitle2" color="text.secondary">Status:</Typography>
+                <Box sx={{ mb: 2 }}>{getStatusChip(selectedMessage.status)}</Box>
+                
+                {selectedMessage.response && (
+                  <>
+                    <Typography variant="subtitle2" color="text.secondary">Admin Response:</Typography>
+                    <Paper variant="outlined" sx={{ p: 2, backgroundColor: 'primary.50' }}>
+                      <Typography variant="body2">{selectedMessage.response}</Typography>
+                    </Paper>
+                  </>
+                )}
+                
+                {!selectedMessage.response && (
+                  <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
+                    No response from admin yet.
+                  </Typography>
+                )}
+              </Box>
             </DialogContent>
             <DialogActions>
               <Button onClick={handleClose}>Close</Button>

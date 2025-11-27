@@ -7,6 +7,8 @@ const contactSchema = new mongoose.Schema({
   message: { type: String, required: true },
   status: { type: String, enum: ['Pending', 'In Progress', 'Resolved'], default: 'Pending' },
   response: { type: String },
+  isFromSeller: { type: Boolean, default: false },
+  sellerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Seller' },
   createdAt: { type: Date, default: Date.now },
 });
 

@@ -24,8 +24,19 @@ const ContactPage = () => {
       toast.error('You must be logged in to send a message.');
       return;
     }
+    
+    const submissionData = { 
+      ...formData, 
+      name: user.sellerName, 
+      email: user.email,
+      isFromSeller: true,
+      sellerId: user._id
+    };
+    
+    console.log('Sending contact message data:', submissionData);
+    
     try {
-      await axios.post('http://localhost:5001/api/contact', { ...formData, name: user.sellerName, email: user.email });
+      await axios.post('http://localhost:5001/api/contact', submissionData);
       toast.success('Message sent successfully!');
       setFormData({ subject: '', message: '' });
     } catch (error) {

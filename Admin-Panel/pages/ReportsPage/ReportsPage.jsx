@@ -52,8 +52,14 @@ const ReportsPage = () => {
       setProducts(allProducts);
       setSellers(allSellers);
 
-      const verifiedCount = allSellers.filter(s => s.isVerified).length;
-      const activeCount = allSellers.filter(s => s.products?.length > 0).length;
+      const verifiedCount = allSellers.filter(s => s.verificationStatus === 'verified').length;
+      const activeCount = allSellers.filter(seller => {
+        const sellerProducts = allProducts.filter(
+          p => (p.sellerId?._id === seller._id || p.sellerId === seller._id) && 
+               p.approvalStatus === 'approved'
+        );
+        return sellerProducts.length > 0;
+      }).length;
 
       setStats({
         totalProducts: allProducts.length,
@@ -98,7 +104,7 @@ const ReportsPage = () => {
   ].filter(item => item.value > 0);
 
   const overviewData = [
-    { category: 'Total Products', count: stats.totalProducts },
+    { category: 'Approved Products', count: stats.approvedProducts },
     { category: 'Total Sellers', count: stats.totalSellers },
     { category: 'Active Sellers', count: stats.activeSellers }
   ];
@@ -112,7 +118,8 @@ const ReportsPage = () => {
     .map(seller => ({
       name: seller.sellerName || 'Unknown',
       products: products.filter(
-        p => p.sellerId?._id === seller._id || p.sellerId === seller._id
+        p => (p.sellerId?._id === seller._id || p.sellerId === seller._id) && 
+             p.approvalStatus === 'approved'
       ).length
     }))
     .filter(s => s.products > 0)

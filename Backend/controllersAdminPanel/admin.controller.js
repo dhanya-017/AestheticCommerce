@@ -127,9 +127,32 @@ const rejectProduct = async (req, res) => {
 // Get all sellers
 const getAllSellers = async (req, res) => {
   try {
-    const sellers = await Seller.find({}).select("-password");
-    res.status(200).json(sellers);
+    console.log('Fetching sellers with approved product counts...');
+    
+    // First, let's get basic seller info
+    const sellers = await Seller.find({}).select('-password');
+    console.log('Found sellers:', sellers.length);
+    
+    // Now let's get approved product counts for each seller
+    const sellersWithCounts = await Promise.all(
+      sellers.map(async (seller) => {
+        const productCount = await Product.countDocuments({ 
+          sellerId: seller._id,
+          approvalStatus: 'approved'
+        });
+        console.log(`Seller ${seller.sellerName} (${seller._id}) has ${productCount} approved products`);
+        
+        return {
+          ...seller.toObject(),
+          productCount
+        };
+      })
+    );
+    
+    console.log('Returning sellers with approved product counts');
+    res.status(200).json(sellersWithCounts);
   } catch (error) {
+    console.error('Error in getAllSellers:', error);
     res.status(500).json({ message: "Error fetching sellers", error });
   }
 };

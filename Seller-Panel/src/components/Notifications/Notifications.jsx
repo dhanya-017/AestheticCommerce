@@ -41,13 +41,6 @@ const Notifications = () => {
         });
         const data = await response.json();
         setNotifications(data);
-        
-        // Mark all unread notifications as read
-        const unreadNotifications = data.filter(n => !n.read);
-        if (unreadNotifications.length > 0) {
-          const unreadIds = unreadNotifications.map(n => n._id);
-          markNotificationsAsRead(unreadIds);
-        }
       } catch (error) {
         console.error('Error fetching notifications:', error);
       }
@@ -58,7 +51,15 @@ const Notifications = () => {
 
   const unreadCount = notifications.filter(n => !n.read).length;
 
-  const handleToggle = () => setIsOpen(!isOpen);
+  const handleToggle = () => {
+    // Mark all unread notifications as read when opening the dropdown
+    const unreadNotifications = notifications.filter(n => !n.read);
+    if (unreadNotifications.length > 0 && !isOpen) {
+      const unreadIds = unreadNotifications.map(n => n._id);
+      markNotificationsAsRead(unreadIds);
+    }
+    setIsOpen(!isOpen);
+  };
 
   const handleMarkAllAsRead = async () => {
     try {
@@ -90,6 +91,36 @@ const Notifications = () => {
     }
   };
 
+  const handleDeleteNotification = async (id) => {
+    try {
+      const token = localStorage.getItem('sellerToken');
+      await fetch(`${API}/api/notifications/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setNotifications(notifications.filter(n => n._id !== id));
+    } catch (error) {
+      console.error('Error deleting notification:', error);
+    }
+  };
+
+  const handleDeleteAllNotifications = async () => {
+    try {
+      const token = localStorage.getItem('sellerToken');
+      await fetch(`${API}/api/notifications`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      setNotifications([]);
+    } catch (error) {
+      console.error('Error deleting all notifications:', error);
+    }
+  };
+
   return (
     <div className="notifications-container">
       <div className="notification-icon" onClick={handleToggle}>
@@ -100,7 +131,10 @@ const Notifications = () => {
         <div className="notifications-dropdown">
           <div className="notifications-header">
             <h3>Notifications</h3>
-            <button onClick={handleMarkAllAsRead} className="mark-all-read-btn">Mark all as read</button>
+            <div className="notification-actions">
+              <button onClick={handleMarkAllAsRead} className="mark-all-read-btn">Mark all as read</button>
+              <button onClick={handleDeleteAllNotifications} className="delete-all-btn">Clear all</button>
+            </div>
           </div>
           {notifications.length === 0 ? (
             <div className="notification-item">No new notifications</div>
@@ -109,10 +143,21 @@ const Notifications = () => {
               <div
                 key={notification._id}
                 className={`notification-item ${notification.read ? 'read' : 'unread'}`}
-                onClick={() => handleMarkAsRead(notification._id)}
               >
-                <p>{notification.message}</p>
-                <small>{formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}</small>
+                <div className="notification-content">
+                  <p>{notification.message}</p>
+                  <small>{formatDistanceToNow(new Date(notification.createdAt), { addSuffix: true })}</small>
+                </div>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteNotification(notification._id);
+                  }}
+                  className="delete-notification-btn"
+                  title="Delete notification"
+                >
+                  ×
+                </button>
               </div>
             ))
           )}

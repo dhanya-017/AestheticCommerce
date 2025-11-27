@@ -70,4 +70,47 @@ const markAllNotificationsAsRead = async (req, res) => {
   }
 };
 
-module.exports = { getNotifications, markNotificationAsRead, markAllNotificationsAsRead };
+// @desc    Delete a notification
+// @route   DELETE /api/notifications/:id
+// @access  Private
+const deleteNotification = async (req, res) => {
+  try {
+    const notification = await Notification.findById(req.params.id);
+
+    if (!notification) {
+      return res.status(404).json({ message: 'Notification not found' });
+    }
+
+    // Ensure the user owns the notification
+    if (notification.recipient.toString() !== req.user._id.toString()) {
+      return res.status(401).json({ message: 'Not authorized' });
+    }
+
+    await Notification.findByIdAndDelete(req.params.id);
+
+    res.status(200).json({ message: 'Notification deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting notification', error });
+  }
+};
+
+// @desc    Delete all notifications for the user
+// @route   DELETE /api/notifications
+// @access  Private
+const deleteAllNotifications = async (req, res) => {
+  try {
+    const recipientId = req.user._id;
+    const recipientModel = req.user.role === 'admin' ? 'Admin' : req.user.role === 'seller' ? 'Seller' : 'User';
+
+    await Notification.deleteMany({
+      recipient: recipientId,
+      recipientModel: recipientModel,
+    });
+
+    res.status(200).json({ message: 'All notifications deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting notifications', error });
+  }
+};
+
+module.exports = { getNotifications, markNotificationAsRead, markAllNotificationsAsRead, deleteNotification, deleteAllNotifications };

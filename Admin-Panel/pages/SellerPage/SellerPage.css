@@ -184,6 +184,18 @@
   text-transform: capitalize;
 }
 
+.product-count-badge {
+  display: inline-block;
+  background-color: #20BFA5;
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85em;
+  font-weight: 600;
+  min-width: 30px;
+  text-align: center;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .sellers-page {

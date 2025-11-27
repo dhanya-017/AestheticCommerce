@@ -62,6 +62,9 @@ const SellersPage = () => {
     } else if (sortBy === 'date') {
       compareA = new Date(a.createdAt || a._id);
       compareB = new Date(b.createdAt || b._id);
+    } else if (sortBy === 'products') {
+      compareA = a.productCount || 0;
+      compareB = b.productCount || 0;
     }
     
     if (sortOrder === 'asc') {
@@ -132,6 +135,8 @@ const SellersPage = () => {
             <option value="name-desc">Name (Z-A)</option>
             <option value="store-asc">Store (A-Z)</option>
             <option value="store-desc">Store (Z-A)</option>
+            <option value="products-asc">Products (Least to Most)</option>
+            <option value="products-desc">Products (Most to Least)</option>
             <option value="date-desc">Date (Newest)</option>
             <option value="date-asc">Date (Oldest)</option>
           </select>
@@ -144,6 +149,7 @@ const SellersPage = () => {
             <th>Store Name</th>
             <th>Email</th>
             <th>Phone</th>
+            <th>Products</th>
             <th>Verification Status</th>
             <th>Actions</th>
           </tr>
@@ -155,6 +161,11 @@ const SellersPage = () => {
               <td>{seller.storeName}</td>
               <td>{seller.email}</td>
               <td>{seller.phone}</td>
+              <td>
+                <span className="product-count-badge">
+                  {seller.productCount || 0}
+                </span>
+              </td>
               <td>{getStatusBadge(seller.verificationStatus)}</td>
               <td>
                 <button className="action-btn view-details-btn" onClick={() => handleViewDetails(seller._id)}>👁️</button>
