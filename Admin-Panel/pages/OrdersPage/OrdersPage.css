@@ -1,0 +1,64 @@
+.orders-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.orders-page h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #23272d;
+  margin-bottom: 20px;
+}
+
+.orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 28px rgba(44, 62, 80, 0.12);
+  overflow: hidden;
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 16px 20px;
+  text-align: left;
+  border-bottom: 1px solid #ebecf0;
+}
+
+.orders-table th {
+  background-color: #f7f8fa;
+  font-weight: 600;
+  color: #636b7b;
+}
+
+.orders-table tbody tr:hover {
+  background-color: #f1f3f5;
+}
+
+.orders-controls {
+  margin-bottom: 20px;
+}
+
+.local-search-input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1.5px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: 'Poppins', Arial, sans-serif;
+  transition: all 0.2s ease;
+  background: #ffffff;
+}
+
+.local-search-input:focus {
+  outline: none;
+  border-color: #20BFA5;
+  box-shadow: 0 0 0 3px rgba(32, 191, 165, 0.1);
+}
+
+.local-search-input::placeholder {
+  color: #95a5a6;
+}
+

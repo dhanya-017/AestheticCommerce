@@ -16,6 +16,7 @@ const AdminLayout = ({ children }) => {
     { path: '/', label: 'Dashboard' },
     { path: '/products', label: 'Products' },
     { path: '/sellers', label: 'Sellers' },
+    { path: '/orders', label: 'Orders' },
     { path: '/reports', label: 'Reports' },
     { path: '/analytics', label: 'Analytics' },
     { path: '/contact-messages', label: 'Contact Messages' },

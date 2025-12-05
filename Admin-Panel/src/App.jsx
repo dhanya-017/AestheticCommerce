@@ -11,6 +11,7 @@ import AnalyticsPage from '../pages/AnalyticsPage/AnalyticsPage';
 import GlobalSearchPage from '../pages/GlobalSearchPage/GlobalSearchPage';
 import ContactMessagesPage from '../pages/ContactMessagesPage/ContactMessagesPage';
 import SellerDetailsPage from '../pages/SellerDetailsPage/SellerDetailsPage';
+import OrdersPage from '../pages/OrdersPage/OrdersPage';
 
 import AdminLayout from '../src/layouts/AdminLayout';
 import { Toaster } from 'react-hot-toast';
@@ -167,6 +168,19 @@ const App = () => {
             isAdmin ? (
               <AdminLayout>
                 <ContactMessagesPage />
+              </AdminLayout>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+
+        <Route
+          path="/orders"
+          element={
+            isAdmin ? (
+              <AdminLayout>
+                <OrdersPage />
               </AdminLayout>
             ) : (
               <Navigate to="/login" />

@@ -183,7 +183,7 @@ router.get('/seller/orders', protect, async (req, res) => {
           user: 1,
           totalAmount: 1,
           paymentStatus: 1,
-          deliveryStatus: 1,
+          status: "$deliveryStatus",
           shippingAddress: 1,
           cancelledAt: 1,
           createdAt: 1,
@@ -375,5 +375,19 @@ router.post(
     }
   }
 );
+
+// -------------------- Get all orders (admin) --------------------
+router.get("/", async (req, res) => {
+  try {
+    const orders = await Order.find({})
+      .populate('products.product')
+      .populate('products.sellerId', 'name email')
+      .sort({ createdAt: -1 });
+    res.status(200).json(orders);
+  } catch (err) {
+    console.error('Get all orders error:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 module.exports = router;
