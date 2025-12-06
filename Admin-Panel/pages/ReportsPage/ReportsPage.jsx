@@ -4,7 +4,7 @@ import './ReportsPage.css';
 import toast from 'react-hot-toast';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
-  ResponsiveContainer, PieChart, Pie, Cell 
+  ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line 
 } from 'recharts';
 
 const ReportsPage = () => {
@@ -27,19 +27,22 @@ const ReportsPage = () => {
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState(new Date());
   const [autoRefresh, setAutoRefresh] = useState(false);
+  const [categoryStats, setCategoryStats] = useState([]);
 
   const fetchReportsData = async () => {
     try {
       const token = localStorage.getItem('adminToken');
       const headers = { Authorization: `Bearer ${token}` };
 
-      const [pendingRes, approvedRes, rejectedRes, sellersRes] = await Promise.all([
+      const [pendingRes, approvedRes, rejectedRes, sellersRes, categoryRes] = await Promise.all([
         axios.get(`${API}/api/admin/products?status=pending`, { headers }),
         axios.get(`${API}/api/admin/products?status=approved`, { headers }),
         axios.get(`${API}/api/admin/products?status=rejected`, { headers }),
         fetch(`${API}/api/admin/sellers`, {
           headers: { Authorization: `Bearer ${token}` }
-        }).then(res => res.json())
+        }).then(res => res.json()),
+        axios.get(`${API}/api/admin/stats/category-stats`, { headers })
+
       ]);
 
       const allProducts = [
@@ -72,6 +75,7 @@ const ReportsPage = () => {
         unverifiedSellers: allSellers.length - verifiedCount
       });
 
+      setCategoryStats(categoryRes.data.data || []);
       setLastUpdated(new Date());
       setLoading(false);
 
@@ -131,6 +135,14 @@ const ReportsPage = () => {
     { status: 'Pending', count: stats.pendingProducts, color: '#ffc107' },
     { status: 'Rejected', count: stats.rejectedProducts, color: '#dc3545' }
   ];
+
+  const productCategoryData = categoryStats.map(item => ({
+    name: item.category,
+    value: item.count,
+  }));
+
+  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF1919'];
+
 
   if (loading) return <div className="reports-loading">Loading reports...</div>;
 
@@ -241,7 +253,7 @@ const ReportsPage = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="count" fill="#20BFA5" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="count" fill="#20BFA5" radius={[8, 8, 0, 0]} barSize={50} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -302,11 +314,49 @@ const ReportsPage = () => {
                 <YAxis dataKey="name" type="category" width={150} />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="products" fill="#667eea" radius={[0, 8, 8, 0]} />
+                <Bar dataKey="products" fill="#667eea" radius={[0, 8, 8, 0]} barSize={30} />
               </BarChart>
             </ResponsiveContainer>
           </div>
         )}
+
+        <div className="chart-card">
+          <h2>Product Category Distribution</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart
+              data={productCategoryData}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis 
+                dataKey="name" 
+                angle={-45} 
+                textAnchor="end"
+                height={60}
+                tick={{ fontSize: 12 }}
+              />
+              <YAxis />
+              <Tooltip 
+                formatter={(value, name, props) => [value, 'Number of Products']}
+                labelFormatter={(label) => `Category: ${label}`}
+              />
+              <Legend />
+              <Line 
+                type="monotone" 
+                dataKey="value" 
+                name="Products"
+                stroke="#20BFA5" 
+                activeDot={{ r: 8 }} 
+                strokeWidth={2}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
 
         <div className="chart-card">
           <h2>Product Status Breakdown</h2>
@@ -317,7 +367,7 @@ const ReportsPage = () => {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Bar dataKey="count" radius={[8, 8, 0, 0]}>
+              <Bar dataKey="count" radius={[8, 8, 0, 0]} barSize={50}>
                 {productDistribution.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={entry.color} />
                 ))}

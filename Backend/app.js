@@ -27,6 +27,7 @@ const statsRoutes = require("./routes-seller-panel/stats.routes");
 
 //ADMIN PANEL ROUTES
 const adminRoutes = require("./routes-admin-panel/admin.routes");
+const statsAdminRoutes = require('./routes/stats.routes');
 
 const connectDB = require('./db/db'); 
 connectDB(); // Connect to MongoDB
@@ -73,6 +74,7 @@ app.use("/api/stats", statsRoutes);
 
 // Admin Panel Routes
 app.use("/api/admin", adminRoutes);
+app.use("/api/admin/stats", statsAdminRoutes);
 
 
 module.exports = app;

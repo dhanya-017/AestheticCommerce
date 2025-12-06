@@ -286,3 +286,86 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* Line Chart Styling */
+.chart-card .recharts-line {
+  transition: all 0.3s ease;
+}
+
+.chart-card .recharts-line-dot {
+  fill: #20BFA5;
+  stroke: #fff;
+  stroke-width: 2;
+  transition: all 0.3s ease;
+}
+
+.chart-card .recharts-line-dot:hover {
+  fill: #1aa891;
+  transform: scale(1.2);
+}
+
+.chart-card .recharts-cartesian-axis-tick text {
+  fill: #666;
+  font-size: 12px;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+.chart-card .recharts-cartesian-axis-line,
+.chart-card .recharts-cartesian-grid line {
+  stroke: #eaeef2;
+}
+
+.chart-card .recharts-legend-item-text {
+  color: #4a5568 !important;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+.chart-card .recharts-tooltip {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid #e2e8f0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  padding: 12px !important;
+}
+
+.chart-card .recharts-tooltip-label {
+  color: #4a5568;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+.chart-card .recharts-tooltip-item {
+  color: #2d3748 !important;
+  font-size: 13px;
+  font-family: 'Poppins', Arial, sans-serif;
+}
+
+.chart-card .recharts-tooltip-item-name {
+  display: inline-block;
+  margin-right: 8px;
+  color: #4a5568;
+}
+
+.chart-card .recharts-tooltip-item-value {
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.chart-card .recharts-tooltip-item-separator {
+  display: none;
+}
+
+/* Responsive adjustments for line chart */
+@media (max-width: 768px) {
+  .chart-card .recharts-cartesian-axis-tick text {
+    font-size: 10px;
+  }
+  
+  .chart-card .recharts-legend-item {
+    font-size: 11px;
+  }
+}
